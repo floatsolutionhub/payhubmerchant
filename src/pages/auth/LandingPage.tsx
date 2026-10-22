@@ -69,7 +69,7 @@ export default function LandingPage() {
               mb: 3
             }}
           >
-            Employee Onboarding
+            PAY HUB PORTAL
           </Box>
 
           <Typography
@@ -83,21 +83,9 @@ export default function LandingPage() {
               mb: 2
             }}
           >
-            Structured onboarding for every staff journey.
+           LOGIN FORM HERE
           </Typography>
-
-          <Typography
-            variant="body1"
-            sx={{
-              color: '#4F6475',
-              fontSize: { xs: '1rem', md: '1.1rem' },
-              lineHeight: 1.8,
-              maxWidth: 620,
-              mb: 4
-            }}
-          >
-            FSDH Onboarding Portal validates each secure session link, identifies whether the staff is an intern, full staff, or consultant, and sends them directly to the correct dashboard.
-          </Typography>
+          {/* //START HERE */}
         </Box>
 
         <Box
@@ -113,7 +101,7 @@ export default function LandingPage() {
           }}
         >
 
-<img src={SmilingLady} alt="Smiling lady" style={{ width: '100%', height: 'auto', objectFit: 'cover' }} />
+{/* <img src={SmilingLady} alt="Smiling lady" style={{ width: '100%', height: 'auto', objectFit: 'cover' }} /> */}
           
         </Box>
       </Box>
