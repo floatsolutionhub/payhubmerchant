@@ -8,9 +8,10 @@ import { store } from './store';
 import { SESSION_EXPIRED_EVENT } from './services/api/httpClient';
 import ProtectedRoute from './components/ProtectedRoute';
 import AuthBootstrap from './components/AuthBootstrap';
-import LandingPage from './pages/auth/LandingPage';
+// import LandingPage from './pages/auth/LandingPage';
 import SessionLanding from './pages/auth/SessionLanding';
 import Dashboard from './pages/Dashboard';
+import SignIn from './pages/auth/SignIn.tsx';
 import NotFoundPage from './pages/NotFound.tsx';
 const theme = createTheme({
   palette: {
@@ -78,7 +79,7 @@ export function App() {
           </Snackbar>
           <Routes>
             {/* Public landing page */}
-            <Route path="/" element={<LandingPage />} />
+            <Route path="/" element={<SignIn />} />
 
             {/* Magic-link verification landing */}
             <Route path="/session/:token" element={<SessionLanding />} />

@@ -36,7 +36,7 @@ export default function LandingPage() {
             bgcolor: 'rgba(255,255,255,0.78)',
             border: '1px solid rgba(0, 73, 135, 0.08)',
             backdropFilter: 'blur(14px)',
-            borderRadius: 6,
+            borderRadius: 0,
             p: { xs: 4, md: 6 },
             boxShadow: '0 28px 80px rgba(24, 39, 75, 0.10)'
           }}
@@ -101,7 +101,7 @@ export default function LandingPage() {
           }}
         >
 
-{/* <img src={SmilingLady} alt="Smiling lady" style={{ width: '100%', height: 'auto', objectFit: 'cover' }} /> */}
+<img src={SmilingLady} alt="Smiling lady" style={{ width: '100%', height: 'auto', objectFit: 'cover' }} />
           
         </Box>
       </Box>
