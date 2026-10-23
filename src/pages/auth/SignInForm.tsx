@@ -23,6 +23,8 @@ const inputSx = {
 const labelSx = { fontWeight: 500 }; // Avenir Medium
 const linkSx = { fontWeight: 500 }; // Avenir Heavy
 
+const FORM_FONT = '"Google Sans", sans-serif';
+
 export default function SignInForm() {
   const formik = useFormik({
     initialValues: { email: "", password: "" },
@@ -34,10 +36,17 @@ export default function SignInForm() {
   });
 
   return (
-    <Box>
+    <Box
+      sx={{
+        "& .MuiTypography-root, & .MuiInputBase-root, & .MuiButton-root, & .MuiFormHelperText-root":
+          {
+            fontFamily: FORM_FONT,
+          },
+      }}
+    >
       <form onSubmit={formik.handleSubmit} noValidate>
         <Typography component="label" htmlFor="email" sx={labelSx}>
-         Email
+          Email
         </Typography>
         <TextField
           id="email"
