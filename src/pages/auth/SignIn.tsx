@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import SignInForm from "./SignInForm";
 import SignInBg from "../../assets/images/signin-bg.png";
+import AuthCarousel from "../../components/AuthCarousel";
 
 export default function SignIn() {
   return (
@@ -41,7 +42,13 @@ export default function SignIn() {
           </Typography>
 
           <Typography
-            sx={{ color: "#0B1C3D", fontSize: 30, fontWeight: 600, mb: 3 }}
+            sx={{
+              fontFamily: '"Google Sans", sans-serif',
+              color: "#0B1C3D",
+              fontSize: 30,
+              fontWeight: 700,
+              mb: 3,
+            }}
           >
             Sign In
           </Typography>
@@ -54,39 +61,34 @@ export default function SignIn() {
       <Box
         sx={{
           display: { xs: "none", md: "flex" },
-          bgcolor: "primary.main",
-          backgroundImage: `url(${SignInBg})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
+          position: "relative", // lets the image layer sit inside this panel
+          overflow: "hidden",
+          bgcolor: "primary.main", // the blue, full strength
+          color: "#fff",
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
           px: 6,
+
+          // the image layer, faded to 3%
+          "&::before": {
+            content: '""',
+            position: "absolute",
+            inset: 0, // stretch to all four edges
+            backgroundImage: `url(${SignInBg})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            opacity: 0.03,
+            pointerEvents: "none",
+          },
+
+          // keep the slide, title and text above the image layer
+          "& > *": { position: "relative", zIndex: 1 },
         }}
       >
         {/* CAROUSEL GOES HERE */}
-        <Box
-          sx={{
-            width: 360,
-            height: 360,
-            borderRadius: "16px",
-            bgcolor: "rgba(255,255,255,0.25)",
-            display: "grid",
-            placeItems: "center",
-          }}
-        >
-          Slide image
-        </Box>
-        <Typography sx={{ fontSize: 26, fontWeight: 600, mt: 6 }}>
-          Centralized Report Management
-        </Typography>
-        <Typography
-          sx={{ maxWidth: 420, textAlign: "center", mt: 1, opacity: 0.9 }}
-        >
-          Easily collect, manage, and consolidate NDIC reports from a single,
-          secure platform.
-        </Typography>
+        <AuthCarousel />
       </Box>
     </Box>
   );
