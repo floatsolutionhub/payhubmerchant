@@ -5,9 +5,14 @@ import {
   Button,
   CircularProgress,
   Link as MuiLink,
+  Alert,
 } from "@mui/material";
+import { useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../store";
+import { signIn } from "../../services/auth/signIn";
 
 const schema = yup.object({
   email: yup
@@ -26,12 +31,22 @@ const linkSx = { fontWeight: 500 }; // Avenir Heavy
 const FORM_FONT = '"Google Sans", sans-serif';
 
 export default function SignInForm() {
+  const [serverError, setServerError] = useState("");
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
   const formik = useFormik({
     initialValues: { email: "", password: "" },
     validationSchema: schema,
-    onSubmit: async () => {
-      // Pretend to sign in: show the loading state for 2 seconds, send nothing
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+    onSubmit: async (values) => {
+      setServerError("");
+      try {
+        await signIn(values.email, values.password, dispatch);
+
+        navigate("/dashboard", { replace: true });
+      } catch (err) {
+        setServerError(err instanceof Error ? err.message : "Sign in failed");
+      }
     },
   });
 
@@ -45,6 +60,11 @@ export default function SignInForm() {
       }}
     >
       <form onSubmit={formik.handleSubmit} noValidate>
+        {serverError && (
+          <Alert severity="error" sx={{ mb: 4 }}>
+            {serverError}
+          </Alert>
+        )}
         <Typography component="label" htmlFor="email" sx={labelSx}>
           Email
         </Typography>

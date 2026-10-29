@@ -56,7 +56,8 @@ export default function AuthCarousel() {
         textAlign: "center",
       }}
     >
-      {/* square box: stays still */}
+
+      
       <Box
         sx={{
           width: 380,
@@ -80,7 +81,6 @@ export default function AuthCarousel() {
         </AnimatePresence>
       </Box>
 
-      {/* title and text: slide together with the image */}
       <AnimatePresence mode="wait">
         <motion.div key={index} {...slideMotion}>
           <Typography
@@ -107,7 +107,6 @@ export default function AuthCarousel() {
         </motion.div>
       </AnimatePresence>
 
-      {/* arrows and dots: stay still */}
       <Box sx={{ display: "flex", alignItems: "center", gap: 12, mt: 5 }}>
         <IconButton
           aria-label="Previous slide"
