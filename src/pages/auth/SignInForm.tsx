@@ -25,8 +25,8 @@ const schema = yup.object({
 const inputSx = {
   "& .MuiOutlinedInput-root": { borderRadius: "10px", height: 56 },
 };
-const labelSx = { fontWeight: 500 }; // Avenir Medium
-const linkSx = { fontWeight: 500 }; // Avenir Heavy
+const labelSx = { fontWeight: 500 };
+const linkSx = { fontWeight: 500 }; 
 
 const FORM_FONT = '"Google Sans", sans-serif';
 
