@@ -160,7 +160,7 @@ export default function Sidebar({ menuItems }: SidebarProps) {
                           primary={item.label}
                           primaryTypographyProps={{
                             fontSize: "16px",
-                            fontWeight: isActive ? 600 : 400,
+                            fontWeight: isActive ? 500 : 400,
                           }}
                         />
                       </ListItemButton>
