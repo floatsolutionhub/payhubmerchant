@@ -15,6 +15,7 @@ import DashboardLayout from "./components/DashboardLayout.tsx";
 import { payhubNavItems } from "./config/navigation.ts";
 import Overview from "./pages/auth/Overview.tsx";
 import SignIn from "./pages/auth/SignIn.tsx";
+import SmallScreenNotice from "./components/SmallScreenNotice.tsx";
 import NotFoundPage from "./pages/NotFound.tsx";
 const theme = createTheme({
   palette: {
@@ -66,6 +67,7 @@ export function App() {
         <CssBaseline />
         <BrowserRouter>
           <AuthBootstrap />
+          <SmallScreenNotice />
           <Snackbar
             open={isSessionExpiredToastOpen}
             autoHideDuration={4000}
@@ -96,7 +98,7 @@ export function App() {
                 </ProtectedRoute>
               }
             >
-             <Route path="/dashboard" element={<Overview/>} />
+              <Route path="/dashboard" element={<Overview />} />
             </Route>
 
             {/* Intern employee route */}

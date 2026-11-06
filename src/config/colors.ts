@@ -16,6 +16,7 @@ export const colors = {
   volume360: "#00305A",
   volumePay: "#005BA9",
   inflowText: "#0F0F3D",
+  volumeTrendsT: "#39394E",
 
   // stat card backgrounds
   collectionNavy: "#144571",
@@ -34,3 +35,5 @@ export const colors = {
   failed: "#A71010",
   failedBg: "#CC35100D",
 };
+
+export const shadow03 = "0px 8px 28px 0px rgba(1, 5, 17, 0.3)";

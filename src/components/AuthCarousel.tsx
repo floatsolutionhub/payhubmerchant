@@ -22,7 +22,6 @@ const slides = [
   },
 ];
 
-// the slide-in / slide-out movement, shared by the image and the text
 const slideMotion = {
   initial: { opacity: 0, x: 40 },
   animate: { opacity: 1, x: 0 },
@@ -36,7 +35,6 @@ export default function AuthCarousel() {
   const go = (step: number) =>
     setIndex((i) => (i + step + slides.length) % slides.length);
 
-  // next slide every 6 seconds; restarts after each click
   useEffect(() => {
     const timer = setTimeout(
       () => setIndex((i) => (i + 1) % slides.length),
@@ -56,8 +54,6 @@ export default function AuthCarousel() {
         textAlign: "center",
       }}
     >
-
-      
       <Box
         sx={{
           width: 380,

@@ -27,20 +27,59 @@ export const payoutStats: PayoutStats = {
 };
 
 // Volume Trends chart
-export const volumeTrends: VolumePoint[] = [
-  { month: "Jan", fsdh360: 60, fsdhPay: 38 },
-  { month: "Feb", fsdh360: 62, fsdhPay: 40 },
-  { month: "Mar", fsdh360: 61, fsdhPay: 39 },
-  { month: "Apr", fsdh360: 62, fsdhPay: 40 },
-  { month: "May", fsdh360: 64, fsdhPay: 42 },
-  { month: "Jun", fsdh360: 68, fsdhPay: 44 },
-  { month: "Jul", fsdh360: 63, fsdhPay: 41 },
-  { month: "Aug", fsdh360: 70, fsdhPay: 45 },
-  { month: "Sep", fsdh360: 72, fsdhPay: 46 },
-  { month: "Oct", fsdh360: 69, fsdhPay: 44 },
-  { month: "Nov", fsdh360: 73, fsdhPay: 47 },
-  { month: "Dec", fsdh360: 82, fsdhPay: 52 },
+const monthlyAnchors = [
+  { fsdh360: 60, fsdhPay: 38 }, // Jan - Dec
+  { fsdh360: 62, fsdhPay: 40 },
+  { fsdh360: 61, fsdhPay: 39 },
+  { fsdh360: 62, fsdhPay: 40 },
+  { fsdh360: 64, fsdhPay: 42 },
+  { fsdh360: 68, fsdhPay: 44 },
+  { fsdh360: 63, fsdhPay: 41 },
+  { fsdh360: 70, fsdhPay: 45 },
+  { fsdh360: 72, fsdhPay: 46 },
+  { fsdh360: 69, fsdhPay: 44 },
+  { fsdh360: 73, fsdhPay: 47 },
+  { fsdh360: 82, fsdhPay: 52 },
 ];
+
+const POINTS_PER_MONTH = 7;
+
+const round1 = (n: number) => Math.round(n * 10) / 10;
+
+function makeVolumeTrends(): VolumePoint[] {
+  const points: VolumePoint[] = [];
+
+  monthlyAnchors.forEach((current, monthIndex) => {
+    const next = monthlyAnchors[monthIndex + 1] ?? current;
+
+    for (let i = 0; i < POINTS_PER_MONTH; i++) {
+      const progress = i / POINTS_PER_MONTH;
+
+      const wiggle = Math.sin((monthIndex * POINTS_PER_MONTH + i) * 1.9);
+
+      const month = String(monthIndex + 1).padStart(2, "0");
+      const day = String(1 + i * 4).padStart(2, "0");
+
+      points.push({
+        date: `2026-${month}-${day}`,
+        fsdh360: round1(
+          current.fsdh360 +
+            (next.fsdh360 - current.fsdh360) * progress +
+            wiggle * 1.2,
+        ),
+        fsdhPay: round1(
+          current.fsdhPay +
+            (next.fsdhPay - current.fsdhPay) * progress +
+            wiggle * 0.8,
+        ),
+      });
+    }
+  });
+
+  return points;
+}
+
+export const volumeTrends = makeVolumeTrends();
 
 // Inflow Channel doughnut
 export const inflowChannels: InflowChannel[] = [
@@ -49,8 +88,8 @@ export const inflowChannels: InflowChannel[] = [
 ];
 
 // Transactions table
-export const TRANSACTIONS_TOTAL = 240; // the number in the grey badge in Figma
-export const TRANSACTIONS_PAGE_SIZE = 7; // Figma shows 7 rows per page
+export const TRANSACTIONS_TOTAL = 240;
+export const TRANSACTIONS_PAGE_SIZE = 7;
 
 const otherCustomers = [
   "Tunde Bakare",
@@ -62,7 +101,6 @@ const otherCustomers = [
 const otherAmounts = [15_500_000, 2_450_000_000, 780_000_000, 96_200_000_000];
 
 // Builds fake rows. Page 1 (the first 7 rows) matches Figma exactly.
-// Later pages are varied so we can test search, paging and the three status colours.
 function makeTransactions(idPrefix: string, count: number): Transaction[] {
   return Array.from({ length: count }, (_, i) => {
     const isPageOne = i < TRANSACTIONS_PAGE_SIZE;

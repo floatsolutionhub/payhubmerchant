@@ -31,7 +31,7 @@ export interface PayoutStats {
 }
 
 export interface VolumePoint {
-  month: string;
+  date: string;
   fsdh360: number;
   fsdhPay: number;
 }
