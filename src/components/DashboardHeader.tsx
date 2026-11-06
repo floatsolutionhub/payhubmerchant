@@ -53,6 +53,7 @@ export default function DashboardHeader({
           height: 48,
           bgcolor: "#F3F3F3",
           color: "#1E1E1E",
+          mr: 3,
           "&:hover": { bgcolor: "#E9EAEB" },
         }}
       >

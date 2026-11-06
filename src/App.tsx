@@ -1,48 +1,52 @@
-import { useEffect, useState } from 'react';
-import { Alert, Snackbar } from '@mui/material';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { store } from './store';
-import { SESSION_EXPIRED_EVENT } from './services/api/httpClient';
-import ProtectedRoute from './components/ProtectedRoute';
-import AuthBootstrap from './components/AuthBootstrap';
+import { useEffect, useState } from "react";
+import { Alert, Snackbar } from "@mui/material";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Provider } from "react-redux";
+import { store } from "./store";
+import { SESSION_EXPIRED_EVENT } from "./services/api/httpClient";
+import ProtectedRoute from "./components/ProtectedRoute";
+import AuthBootstrap from "./components/AuthBootstrap";
 // import LandingPage from './pages/auth/LandingPage';
-import SessionLanding from './pages/auth/SessionLanding';
-import Dashboard from './pages/Dashboard';
-import SignIn from './pages/auth/SignIn.tsx';
-import NotFoundPage from './pages/NotFound.tsx';
+import SessionLanding from "./pages/auth/SessionLanding";
+// import Dashboard from './pages/Dashboard';
+import DashboardLayout from "./components/DashboardLayout.tsx";
+import { payhubNavItems } from "./config/navigation.ts";
+import Overview from "./pages/auth/Overview.tsx";
+import SignIn from "./pages/auth/SignIn.tsx";
+import NotFoundPage from "./pages/NotFound.tsx";
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#004987'
-    }
+      main: "#004987",
+    },
   },
   typography: {
-    fontFamily: 'Avenir, sans-serif',
+    fontFamily: "Avenir, sans-serif",
     h1: {
-      fontFamily: 'Merriweather, serif'
+      fontFamily: "Merriweather, serif",
     },
     h2: {
-      fontFamily: 'Merriweather, serif'
+      fontFamily: "Merriweather, serif",
     },
     h3: {
-      fontFamily: 'Merriweather, serif'
+      fontFamily: "Merriweather, serif",
     },
     h4: {
-      fontFamily: 'Merriweather, serif'
+      fontFamily: "Merriweather, serif",
     },
     h5: {
-      fontFamily: 'Merriweather, serif'
+      fontFamily: "Merriweather, serif",
     },
     h6: {
-      fontFamily: 'Merriweather, serif'
-    }
-  }
+      fontFamily: "Merriweather, serif",
+    },
+  },
 });
 export function App() {
-  const [isSessionExpiredToastOpen, setIsSessionExpiredToastOpen] = useState(false);
+  const [isSessionExpiredToastOpen, setIsSessionExpiredToastOpen] =
+    useState(false);
 
   useEffect(() => {
     const onSessionExpired = () => {
@@ -65,13 +69,13 @@ export function App() {
           <Snackbar
             open={isSessionExpiredToastOpen}
             autoHideDuration={4000}
-            anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+            anchorOrigin={{ vertical: "top", horizontal: "center" }}
             onClose={() => setIsSessionExpiredToastOpen(false)}
           >
             <Alert
               severity="warning"
               variant="filled"
-              sx={{ width: '100%' }}
+              sx={{ width: "100%" }}
               onClose={() => setIsSessionExpiredToastOpen(false)}
             >
               Session Expired! Kindly login Again.
@@ -84,41 +88,41 @@ export function App() {
             {/* Magic-link verification landing */}
             <Route path="/session/:token" element={<SessionLanding />} />
 
-            {/* Fulltime employee route */}
+            {/* Dashboard Routes*/}
             <Route
-              path="/dashboard"
               element={
-              <ProtectedRoute allowedTypes={["fulltime"]}>
-                  <Dashboard />
+                <ProtectedRoute allowedTypes={["fulltime"]}>
+                  <DashboardLayout menuItems={payhubNavItems} />
                 </ProtectedRoute>
-              } />
+              }
+            >
+             <Route path="/dashboard" element={<Overview/>} />
+            </Route>
 
             {/* Intern employee route */}
-            <Route
+            {/* <Route
               path="/dboard"
               element={
               <ProtectedRoute allowedTypes={["interns"]}>
                   <Dashboard />
                 </ProtectedRoute>
-              } />
+              } /> */}
 
             {/* Consultant route */}
-            <Route
+            {/* <Route
               path="/consultant-dashboard"
               element={
               <ProtectedRoute allowedTypes={["consultant"]}>
                   <Dashboard />
                 </ProtectedRoute>
-              } />
+              } /> */}
 
             {/* Fallback */}
             <Route path="*" element={<NotFoundPage />} />
-            <Route path="/testing" element={
-              <NotFoundPage/>
-              } />
+            <Route path="/testing" element={<NotFoundPage />} />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>
-    </Provider>);
-
+    </Provider>
+  );
 }

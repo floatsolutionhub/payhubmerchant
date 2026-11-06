@@ -12,7 +12,6 @@ export default function SignIn() {
         gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
       }}
     >
-      {/* LEFT: logo, headings, form */}
       <Box sx={{ bgcolor: "#fff", px: { xs: 3, md: 20 }, py: 6 }}>
         <Box sx={{ maxWidth: 460 }}>
           <Box
@@ -52,29 +51,26 @@ export default function SignIn() {
           >
             Sign In
           </Typography>
-
           <SignInForm />
         </Box>
       </Box>
 
-      {/* RIGHT: blue carousel panel with background lines (hidden on small screens) */}
       <Box
         sx={{
           display: { xs: "none", md: "flex" },
-          position: "relative", // lets the image layer sit inside this panel
+          position: "relative",
           overflow: "hidden",
-          bgcolor: "primary.main", // the blue, full strength
+          bgcolor: "primary.main",
           color: "#fff",
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
           px: 6,
 
-          // the image layer, faded to 3%
           "&::before": {
             content: '""',
             position: "absolute",
-            inset: 0, // stretch to all four edges
+            inset: 0,
             backgroundImage: `url(${SignInBg})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
@@ -83,11 +79,9 @@ export default function SignIn() {
             pointerEvents: "none",
           },
 
-          // keep the slide, title and text above the image layer
           "& > *": { position: "relative", zIndex: 1 },
         }}
       >
-        {/* CAROUSEL GOES HERE */}
         <AuthCarousel />
       </Box>
     </Box>
