@@ -1,16 +1,21 @@
 import { Box } from "@mui/material";
-import PageHeader from "../../components/PageHeader";
-import CollectionsRow from "../../components/CollectionsRow";
-import PayoutsRow from "../../components/PayoutsRow";
+import PageHeader from "../components/PageHeader";
+import CollectionsRow from "../components/CollectionsRow";
+import PayoutsRow from "../components/PayoutsRow";
 import {
   collectionStats,
   payoutStats,
   volumeTrends,
   inflowChannels,
-} from "../../data/overviewMock";
-import { longDate } from "../../utils/format";
-import VolumeTrendsChart from "../../components/VolumeTrendsChart";
-import InflowChannelChart from "../../components/InflowChannelChart";
+  collectionTransactions,
+  TRANSACTIONS_PAGE_SIZE,
+  TRANSACTIONS_TOTAL,
+  payoutTransactions,
+} from "../data/overviewMock";
+import { longDate } from "../utils/format";
+import VolumeTrendsChart from "../components/VolumeTrendsChart";
+import InflowChannelChart from "../components/InflowChannelChart";
+import TransactionsTable from "../components/TransactionsTable";
 
 export default function Overview() {
   return (
@@ -45,6 +50,15 @@ export default function Overview() {
       >
         <VolumeTrendsChart data={volumeTrends} />
         <InflowChannelChart data={inflowChannels} />
+      </Box>
+
+      <Box sx={{ m: 2.5 }}>
+        <TransactionsTable
+          collectionRows={collectionTransactions}
+          collectionTotal={TRANSACTIONS_TOTAL}
+          payoutRows={payoutTransactions}
+          pageSize={TRANSACTIONS_PAGE_SIZE}
+        />
       </Box>
     </>
   );

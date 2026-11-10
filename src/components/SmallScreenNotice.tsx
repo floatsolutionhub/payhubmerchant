@@ -28,14 +28,14 @@ export default function SmallScreenNotice() {
       aria-labelledby="small-screen-title"
       sx={{
         position: "fixed",
-        inset: 0, // covers the whole screen
-        zIndex: 1200, // above the sidebar and header, below MUI dialogs
+        inset: 0,
+        zIndex: 1200,
         display: "grid",
         placeItems: "center",
         p: 3,
         bgcolor: "rgba(243, 249, 255, 0.7)",
         backdropFilter: "blur(10px)",
-        WebkitBackdropFilter: "blur(10px)", // for Safari on iPhones
+        WebkitBackdropFilter: "blur(10px)",
       }}
     >
       <Box

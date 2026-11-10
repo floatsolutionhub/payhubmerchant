@@ -1,6 +1,7 @@
 import { Box, Button, Typography } from "@mui/material";
 import { Cell, Pie, PieChart } from "recharts";
 import { colors } from "../config/colors";
+import { chartShadow } from "../config/colors";
 import type { InflowChannel } from "../types/overview";
 
 // first colour is for "Static VA", second for "Dynamic"
@@ -19,12 +20,12 @@ export default function InflowChannelChart({
         borderRadius: "12px",
         display: "flex",
         flexDirection: "column",
-        height: "100%", // stretch to match the Volume Trends card
+        height: "100%",
         overflow: "hidden",
+        boxShadow: chartShadow,
         fontFamily: '"Google Sans", sans-serif',
       }}
     >
-      {/* body: title, doughnut and legend */}
       <Box sx={{ flex: 1, p: 2 }}>
         <Typography
           sx={{
@@ -43,7 +44,7 @@ export default function InflowChannelChart({
             flexWrap: "wrap",
             alignItems: "flex-start",
             gap: 2,
-            mt: 5,
+            mt: 1,
           }}
         >
           <PieChart width={270} height={270}>

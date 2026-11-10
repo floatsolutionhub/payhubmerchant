@@ -10,6 +10,7 @@ import {
   YAxis,
 } from "recharts";
 import { colors } from "../config/colors";
+import { chartShadow } from "../config/colors";
 import type { VolumePoint } from "../types/overview";
 import { monthShort } from "../utils/format";
 import LegendDot from "./LegendDot";
@@ -34,10 +35,10 @@ export default function VolumeTrendsChart({ data }: { data: VolumePoint[] }) {
         border: `1px solid ${colors.border}`,
         fontFamily: '"Google Sans", sans-serif',
         borderRadius: "12px",
+        boxShadow:chartShadow,
         p: 3,
       }}
     >
-      {/* top: title and subtitle on the left, three-dots button on the right */}
       <Box
         sx={{
           display: "flex",
@@ -106,7 +107,6 @@ export default function VolumeTrendsChart({ data }: { data: VolumePoint[] }) {
             data={data}
             margin={{ top: 8, right: 8, bottom: 16, left: 8 }}
           >
-            {/* soft colour that fades out under each line */}
             <defs>
               <linearGradient id="fill360" x1="0" y1="0" x2="0" y2="1">
                 <stop

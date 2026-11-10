@@ -13,7 +13,7 @@ import SessionLanding from "./pages/auth/SessionLanding";
 // import Dashboard from './pages/Dashboard';
 import DashboardLayout from "./components/DashboardLayout.tsx";
 import { payhubNavItems } from "./config/navigation.ts";
-import Overview from "./pages/auth/Overview.tsx";
+import Overview from "./pages/Overview.tsx";
 import SignIn from "./pages/auth/SignIn.tsx";
 import SmallScreenNotice from "./components/SmallScreenNotice.tsx";
 import NotFoundPage from "./pages/NotFound.tsx";

@@ -26,14 +26,21 @@ export const colors = {
   // success
   success: "#067647", // icons
   successBg: "#0676470D",
+  successBgBorder: "#ABEFC6",
 
   // pending
   pending: "#E3400A",
   pendingBg: "#E3400A0D",
+  pendingBgBorder: "#F0BCAA",
 
   // failed
   failed: "#A71010",
   failedBg: "#CC35100D",
+  failedBgBorder: "#F0AAAA",
+
+  tableBodyT: "#0F0F3D",
 };
 
 export const shadow03 = "0px 8px 28px 0px rgba(1, 5, 17, 0.3)";
+export const chartShadow = " 0px 1px 2px 0px #1018280D";
+export const redShadow = "0px 1px 10px 2px #FF000040";

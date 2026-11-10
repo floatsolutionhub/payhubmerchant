@@ -7,19 +7,19 @@ const styles: Record<
   { color: string; bg: string; border: string }
 > = {
   Successful: {
-    color: colors.successText,
+    color: colors.success,
     bg: colors.successBg,
-    border: colors.successBorder,
+    border: colors.successBgBorder,
   },
   Pending: {
-    color: colors.pendingText,
+    color: colors.pending,
     bg: colors.pendingBg,
-    border: colors.pendingBorder,
+    border: colors.pendingBgBorder,
   },
   Failed: {
-    color: colors.failedText,
+    color: colors.failed,
     bg: colors.failedBg,
-    border: colors.failedBorder,
+    border: colors.failedBgBorder,
   },
 };
 
@@ -33,7 +33,7 @@ export default function StatusPill({ status }: { status: TransactionStatus }) {
         alignItems: "center",
         gap: 0.75,
         px: 1,
-        py: 0.25,
+        py: 0.5,
         borderRadius: 999,
         fontSize: 12,
         fontWeight: 500,
