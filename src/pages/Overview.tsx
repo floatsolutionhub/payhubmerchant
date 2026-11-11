@@ -16,8 +16,24 @@ import { longDate } from "../utils/format";
 import VolumeTrendsChart from "../components/VolumeTrendsChart";
 import InflowChannelChart from "../components/InflowChannelChart";
 import TransactionsTable from "../components/TransactionsTable";
+import { useEffect, useState } from "react";
+import type { Transaction } from "../types/overview";
 
 export default function Overview() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [collectionRows, setCollectionRows] = useState<Transaction[]>([]);
+  const [payoutRows, setPayoutRows] = useState<Transaction[]>([]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setCollectionRows(collectionTransactions);
+      setPayoutRows(payoutTransactions);
+      setIsLoading(false);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <>
       <PageHeader
@@ -54,10 +70,12 @@ export default function Overview() {
 
       <Box sx={{ m: 2.5 }}>
         <TransactionsTable
-          collectionRows={collectionTransactions}
+          collectionRows={collectionRows}
           collectionTotal={TRANSACTIONS_TOTAL}
-          payoutRows={payoutTransactions}
+          payoutRows={payoutRows}
           pageSize={TRANSACTIONS_PAGE_SIZE}
+          searchPlaceholder="Search by date, amount, Account No, ref..."
+          isLoading={isLoading}
         />
       </Box>
     </>

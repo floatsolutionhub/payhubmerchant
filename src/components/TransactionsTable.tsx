@@ -12,6 +12,7 @@ import {
   Button,
   ButtonBase,
 } from "@mui/material";
+import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import StatusPill from "./StatusPill";
 import { colors } from "../config/colors";
@@ -20,6 +21,7 @@ import { nairaFull, shortDate, timeOnly } from "../utils/format";
 import SearchIcon from "../assets/icons/search.svg?react";
 import FilterIcon from "../assets/icons/filter.svg?react";
 import { chartShadow } from "../config/colors";
+import LoadingIcon from "../assets/icons/loading.svg?react";
 
 const columns = [
   { label: "Transaction ID", width: 150 },
@@ -77,6 +79,7 @@ interface TransactionsTableProps {
   payoutRows?: Transaction[];
   pageSize?: number;
   searchPlaceholder?: string;
+  isLoading?: boolean;
 }
 
 export default function TransactionsTable({
@@ -84,7 +87,8 @@ export default function TransactionsTable({
   collectionTotal,
   payoutRows,
   pageSize = 7,
-  searchPlaceholder = "Search by date, amount, Account No, ref...",
+  searchPlaceholder = "Search",
+  isLoading = false,
 }: TransactionsTableProps) {
   const [activeTab, setActiveTab] = useState<TabKey>("collections");
   const [search, setSearch] = useState("");
@@ -211,7 +215,7 @@ export default function TransactionsTable({
                 fontFamily: '"Google Sans", sans-serif',
               }}
             >
-              {badgeCount}
+              {isLoading ? "–" : badgeCount}
             </Box>
           </Box>
           <Typography
@@ -300,99 +304,147 @@ export default function TransactionsTable({
         </Box>
       </Box>
 
-      <TableContainer sx={{ overflowX: "auto" }}>
-        <Table
-          sx={{
-            minWidth: 1200,
-            "& .MuiTableCell-root": {
-              fontSize: 14,
-              py: 1.5,
-              borderBottom: `1px solid ${colors.border}`,
-            },
-            "& thead .MuiTableCell-root": {
-              borderTop: `1px solid ${colors.border}`,
-            },
-            "& .MuiTableCell-root:first-of-type": { pl: 3 },
-            "& .MuiTableCell-root:last-of-type": { pr: 3 },
-          }}
+      <Box sx={{ position: "relative" }}>
+        <TableContainer
+          sx={{ overflowX: "auto", minHeight: isLoading ? 400 : undefined }}
         >
-          <TableHead className="bg-[#F9FAFB]">
-            <TableRow sx={{ height: 52 }}>
-              {columns.map((col) => (
-                <TableCell
-                  key={col.label}
-                  sx={{
-                    minWidth: col.width,
-                    color: colors.volumeTrendsT,
-                    fontSize: 13,
-                    fontWeight: 500,
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  {col.label}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-
-          {pageRows.length === 0 && (
-            <TableRow>
-              <TableCell
-                colSpan={columns.length}
-                align="center"
-                sx={{ py: 6, color: colors.volumeTrendsT }}
-              >
-                No transactions found
-              </TableCell>
-            </TableRow>
-          )}
-
-          <TableBody>
-            {pageRows.map((row) => (
-              <TableRow key={row.id} sx={{ height: 72 }}>
-                <TableCell>{row.id}</TableCell>
-                <TableCell>{row.virtualAcct}</TableCell>
-                <TableCell>
-                  <Typography
+          <Table
+            sx={{
+              minWidth: 1200,
+              "& .MuiTableCell-root": {
+                fontSize: 14,
+                py: 1.5,
+                borderBottom: `1px solid ${colors.border}`,
+              },
+              "& thead .MuiTableCell-root": {
+                borderTop: `1px solid ${colors.border}`,
+              },
+              "& .MuiTableCell-root:first-of-type": { pl: 3 },
+              "& .MuiTableCell-root:last-of-type": { pr: 3 },
+            }}
+          >
+            <TableHead className="bg-[#F9FAFB]">
+              <TableRow sx={{ height: 52 }}>
+                {columns.map((col) => (
+                  <TableCell
+                    key={col.label}
                     sx={{
-                      fontSize: 14,
-                      color: colors.tableBodyT,
+                      minWidth: col.width,
+                      color: colors.volumeTrendsT,
+                      fontSize: 13,
                       fontWeight: 500,
+                      whiteSpace: "nowrap",
                     }}
                   >
-                    {row.collectionAcct}
-                  </Typography>
-                  <Typography sx={{ fontSize: 13 }}>
-                    {row.collectionAcctName}
-                  </Typography>
-                </TableCell>
-                <TableCell sx={{ color: colors.tableBodyT }}>
-                  {row.customer}
-                </TableCell>
-                <TableCell sx={{ fontWeight: 700, color: colors.tableBodyT }}>
-                  {nairaFull(row.amount)}
-                </TableCell>
-                <TableCell>
-                  <Typography sx={{ fontSize: 14, color: colors.tableBodyT }}>
-                    {shortDate(row.date)}
-                  </Typography>
-                  <Typography
-                    sx={{ fontSize: 13, color: colors.volumeTrendsT }}
-                  >
-                    {timeOnly(row.date)}
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <StatusPill status={row.status} />
-                </TableCell>
-                <TableCell>
-                  <StatusPill status={row.notification} />
-                </TableCell>
+                    {col.label}
+                  </TableCell>
+                ))}
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </TableHead>
+
+            <TableBody>
+              {!isLoading && pageRows.length === 0 && (
+                <TableRow>
+                  <TableCell
+                    colSpan={columns.length}
+                    align="center"
+                    sx={{ py: 6, color: colors.volumeTrendsT }}
+                  >
+                    No transactions found
+                  </TableCell>
+                </TableRow>
+              )}
+              {pageRows.map((row) => (
+                <TableRow key={row.id} sx={{ height: 72 }}>
+                  <TableCell>{row.id}</TableCell>
+                  <TableCell>{row.virtualAcct}</TableCell>
+                  <TableCell>
+                    <Typography
+                      sx={{
+                        fontSize: 14,
+                        color: colors.tableBodyT,
+                        fontWeight: 500,
+                      }}
+                    >
+                      {row.collectionAcct}
+                    </Typography>
+                    <Typography sx={{ fontSize: 13 }}>
+                      {row.collectionAcctName}
+                    </Typography>
+                  </TableCell>
+                  <TableCell sx={{ color: colors.tableBodyT }}>
+                    {row.customer}
+                  </TableCell>
+                  <TableCell sx={{ fontWeight: 700, color: colors.tableBodyT }}>
+                    {nairaFull(row.amount)}
+                  </TableCell>
+                  <TableCell>
+                    <Typography sx={{ fontSize: 14, color: colors.tableBodyT }}>
+                      {shortDate(row.date)}
+                    </Typography>
+                    <Typography
+                      sx={{ fontSize: 13, color: colors.volumeTrendsT }}
+                    >
+                      {timeOnly(row.date)}
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <StatusPill status={row.status} />
+                  </TableCell>
+                  <TableCell>
+                    <StatusPill status={row.notification} />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+
+        <AnimatePresence>
+          {isLoading && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              role="status"
+              aria-live="polite"
+              aria-label="Loading transactions"
+              style={{
+                position: "absolute",
+                inset: 0,
+                zIndex: 2,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 12,
+                background: "rgba(255, 255, 255, 0.8)",
+              }}
+            >
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ repeat: Infinity, ease: "linear", duration: 1 }}
+                style={{ display: "flex", color: colors.primary }}
+              >
+                <LoadingIcon width={40} height={40} />
+              </motion.div>
+
+              <Typography
+                sx={{
+                  fontSize: 14,
+
+                  color: colors.volumeTrendsT,
+
+                  fontFamily: '"Google Sans", sans-serif',
+                }}
+              >
+                Loading transactions...
+              </Typography>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </Box>
 
       <Box
         sx={{
@@ -410,7 +462,7 @@ export default function TransactionsTable({
             fontFamily: '"Google Sans", sans-serif',
           }}
         >
-          Page {page} of {totalPages}
+          {isLoading ? "Loading..." : `Page ${page} of ${totalPages}`}
         </Typography>
 
         <Box
@@ -422,7 +474,7 @@ export default function TransactionsTable({
           <Button
             variant="outlined"
             size="small"
-            disabled={page <= 1}
+            disabled={isLoading || page <= 1}
             onClick={() => setPage((p) => p - 1)}
             sx={{
               borderRadius: 999,
@@ -439,7 +491,7 @@ export default function TransactionsTable({
           <Button
             variant="outlined"
             size="small"
-            disabled={page >= totalPages}
+            disabled={isLoading || page >= totalPages}
             onClick={() => setPage((p) => p + 1)}
             sx={{
               borderRadius: 999,

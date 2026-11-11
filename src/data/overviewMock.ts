@@ -100,7 +100,7 @@ const otherCustomers = [
 ];
 const otherAmounts = [15_500_000, 2_450_000_000, 780_000_000, 96_200_000_000];
 
-// Builds fake rows. Page 1 (the first 7 rows) matches Figma exactly.
+
 function makeTransactions(idPrefix: string, count: number): Transaction[] {
   return Array.from({ length: count }, (_, i) => {
     const isPageOne = i < TRANSACTIONS_PAGE_SIZE;
@@ -111,10 +111,10 @@ function makeTransactions(idPrefix: string, count: number): Transaction[] {
       else if (i % 3 === 0) status = "Pending";
     }
 
-    const day = String(8 - (i % 7)).padStart(2, "0"); // 08, 07, ... 02
+    const day = String(8 - (i % 7)).padStart(2, "0");
 
     return {
-      id: `${idPrefix}${743 + i}`, // unique, so React keys work
+      id: `${idPrefix}${743 + i}`, 
       virtualAcct: "1000447873",
       collectionAcct: "1000345673",
       collectionAcctName: "Revlant Int LTD",
@@ -131,7 +131,7 @@ function makeTransactions(idPrefix: string, count: number): Transaction[] {
   });
 }
 
-// 70 rows = 10 pages of 7, so "Page 1 of 10" works like Figma
+
 export const collectionTransactions = makeTransactions("238423Acvs", 70);
 
 // PLACEHOLDER: the FSDH PAY tab is not in the Figma yet.
