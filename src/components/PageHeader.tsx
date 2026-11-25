@@ -28,7 +28,7 @@ export default function PageHeader({
       <Box sx={{ m: 2.5 }}>
         <Typography
           component="h2"
-          sx={{ fontWeight: 600, fontSize: 18, color: colors.textDark }}
+          sx={{ fontWeight: 600, fontSize: 18, color: "#0000000" }}
         >
           {title}
         </Typography>

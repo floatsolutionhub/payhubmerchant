@@ -1,4 +1,3 @@
-// 78700000000 -> "₦78.7B"
 export const nairaShort = (n: number) =>
   "₦" +
   new Intl.NumberFormat("en-NG", {

@@ -14,6 +14,8 @@ import SessionLanding from "./pages/auth/SessionLanding";
 import DashboardLayout from "./components/DashboardLayout.tsx";
 import { payhubNavItems } from "./config/navigation.ts";
 import Overview from "./pages/Overview.tsx";
+import Collections from "./pages/Collections.tsx";
+import Payouts from "./pages/Payouts.tsx";
 import SignIn from "./pages/auth/SignIn.tsx";
 import SmallScreenNotice from "./components/SmallScreenNotice.tsx";
 import NotFoundPage from "./pages/NotFound.tsx";
@@ -99,6 +101,8 @@ export function App() {
               }
             >
               <Route path="/dashboard" element={<Overview />} />
+              <Route path="/collections" element={<Collections />} />
+              <Route path="/payouts" element={<Payouts />} />
             </Route>
 
             {/* Intern employee route */}

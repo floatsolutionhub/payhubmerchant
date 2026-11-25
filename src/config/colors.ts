@@ -9,13 +9,14 @@ export const colors = {
 
   // text and borders
   border: "#EAECF0",
-  textDark: "#000000",
+  textDark: "#565656",
   textSubtle: "#475467",
   textGrey: "#667085",
   trendsText: "#0F0F3D",
   volume360: "#00305A",
   volumePay: "#005BA9",
   inflowText: "#0F0F3D",
+  textBlack: "#000000",
   volumeTrendsT: "#39394E",
 
   // stat card backgrounds

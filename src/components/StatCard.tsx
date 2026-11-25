@@ -56,7 +56,7 @@ export default function StatCard({
         width,
         flexShrink: 0,
         boxSizing: "border-box",
-        color: isDark ? "#fff" : colors.textDark,
+        color: isDark ? "#fff" : colors.textBlack,
         borderRadius: "8px",
         p: 1.5,
         minHeight: 124,

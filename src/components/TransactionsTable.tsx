@@ -74,11 +74,12 @@ function matchesSearch(row: Transaction, text: string) {
 }
 
 interface TransactionsTableProps {
-  collectionRows: Transaction[];
+  collectionRows?: Transaction[];
   collectionTotal?: number;
   payoutRows?: Transaction[];
   pageSize?: number;
   searchPlaceholder?: string;
+  searchWidth?:number | string;
   isLoading?: boolean;
 }
 
@@ -88,16 +89,19 @@ export default function TransactionsTable({
   payoutRows,
   pageSize = 7,
   searchPlaceholder = "Search",
+  searchWidth = 400,
   isLoading = false,
 }: TransactionsTableProps) {
-  const [activeTab, setActiveTab] = useState<TabKey>("collections");
-  const [search, setSearch] = useState("");
-  const [page, setPage] = useState(1);
+const [activeTab, setActiveTab] = useState<TabKey>(
+  collectionRows === undefined ? "payouts" : "collections",
+);
+const [search, setSearch] = useState("");
+const [page, setPage] = useState(1);
 
-  const hasTabs = payoutRows !== undefined;
-  const rows =
-    activeTab === "collections" ? collectionRows : (payoutRows ?? []);
-  const info = tabInfo[activeTab];
+const hasTabs = collectionRows !== undefined && payoutRows !== undefined;
+const rows =
+  (activeTab === "collections" ? collectionRows : payoutRows) ?? [];
+const info = tabInfo[activeTab];
 
   const searchText = search.trim();
   const filteredRows = searchText
@@ -250,7 +254,7 @@ export default function TransactionsTable({
               ),
             }}
             sx={{
-              width: { xs: "100%", md: 400 },
+              width: { xs: "100%", md: searchWidth },
               boxShadow: chartShadow,
 
               "& .MuiOutlinedInput-root": {
@@ -294,7 +298,7 @@ export default function TransactionsTable({
               boxShadow: chartShadow,
               textTransform: "none",
               fontWeight: 600,
-              color: colors.textDark,
+              color: "#222242",
               borderColor: "#D0D5DD",
               fontFamily: '"Google Sans", sans-serif',
             }}
